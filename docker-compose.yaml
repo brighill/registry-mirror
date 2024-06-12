@@ -1,12 +1,16 @@
-version: '2'
+version: '3'
 services:
   docker:
     container_name: docker
     image: registry:2.6.2
     restart: always
     environment:
-      - HTTP_PROXY= ${PROXY}
+      - HTTP_PROXY=${PROXY}
       - HTTPS_PROXY=${PROXY}
+      - SOCKS_PROXY=${PROXY}
+      - http_proxy=${PROXY}
+      - https_proxy=${PROXY}
+      - socks_proxy=${PROXY}
     volumes:
       - ./data:/var/lib/registry
       - ./docker/config.yml:/etc/docker/registry/config.yml
@@ -17,6 +21,10 @@ services:
     environment:
       - HTTP_PROXY=${PROXY}
       - HTTPS_PROXY=${PROXY}
+      - SOCKS_PROXY=${PROXY}
+      - http_proxy=${PROXY}
+      - https_proxy=${PROXY}
+      - socks_proxy=${PROXY}
     volumes:
       - ./data:/var/lib/registry
       - ./nvcr/config.yml:/etc/docker/registry/config.yml
@@ -37,9 +45,27 @@ services:
     environment:
       - HTTP_PROXY=${PROXY}
       - HTTPS_PROXY=${PROXY}
+      - SOCKS_PROXY=${PROXY}
+      - http_proxy=${PROXY}
+      - https_proxy=${PROXY}
+      - socks_proxy=${PROXY}
     volumes:
       - ./data:/var/lib/registry
       - ./k8s/config.yml:/etc/docker/registry/config.yml
+  registryk8s:
+    container_name: registryk8s
+    image: registry:2.6.2
+    restart: always
+    environment:
+      - HTTP_PROXY=${PROXY}
+      - HTTPS_PROXY=${PROXY}
+      - SOCKS_PROXY=${PROXY}
+      - http_proxy=${PROXY}
+      - https_proxy=${PROXY}
+      - socks_proxy=${PROXY}
+    volumes:
+      - ./data:/var/lib/registry
+      - ./registryk8s/config.yml:/etc/docker/registry/config.yml
   quay:
     container_name: quay
     image: registry:2.6.2
@@ -47,6 +73,10 @@ services:
     environment:
       - HTTP_PROXY=${PROXY}
       - HTTPS_PROXY=${PROXY}
+      - SOCKS_PROXY=${PROXY}
+      - http_proxy=${PROXY}
+      - https_proxy=${PROXY}
+      - socks_proxy=${PROXY}
     volumes:
       - ./data:/var/lib/registry
       - ./quay/config.yml:/etc/docker/registry/config.yml
@@ -59,7 +89,7 @@ services:
       - ./custom/config.yml:/etc/docker/registry/config.yml
   nginx:
     container_name: nginx
-    image: nginx
+    image: nginx:1.19.7
     restart: always
     ports:
         - "80:80"
