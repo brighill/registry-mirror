@@ -3,6 +3,8 @@ log:
   fields:
     service: registry
 storage:
+  delete:
+    enabled: true
   cache:
     blobdescriptor: inmemory
   filesystem:
@@ -17,4 +19,4 @@ health:
     interval: 10s
     threshold: 3
 proxy:
-  remoteurl: https://registry.k8s.io
+  remoteurl: https://ghcr.io

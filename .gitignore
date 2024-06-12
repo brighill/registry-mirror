@@ -1,22 +1,2 @@
-*.sonarj
-*.sw*
-.DS_Store
-.settings
-bin
-pom.xml
-
-target/
-
-# Eclipse artifacts, including WTP generated manifests
-.classpath
-.project
-
-# IDEA artifacts and output dirs
-*.iml
-*.ipr
-*.iws
-.idea
-out
-test-output
-atlassian-ide-plugin.xml
-
+data
+cert

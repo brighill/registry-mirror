@@ -2,35 +2,27 @@ version: '3'
 services:
   docker:
     container_name: docker
-    image: registry:2.6.2
+    image: registry:2.8.3
     restart: always
     environment:
       - HTTP_PROXY=${PROXY}
       - HTTPS_PROXY=${PROXY}
-      - SOCKS_PROXY=${PROXY}
-      - http_proxy=${PROXY}
-      - https_proxy=${PROXY}
-      - socks_proxy=${PROXY}
     volumes:
       - ./data:/var/lib/registry
       - ./docker/config.yml:/etc/docker/registry/config.yml
   nvcr:
     container_name: nvcr
-    image: registry:2.6.2
+    image: registry:2.8.3
     restart: always
     environment:
       - HTTP_PROXY=${PROXY}
       - HTTPS_PROXY=${PROXY}
-      - SOCKS_PROXY=${PROXY}
-      - http_proxy=${PROXY}
-      - https_proxy=${PROXY}
-      - socks_proxy=${PROXY}
     volumes:
       - ./data:/var/lib/registry
       - ./nvcr/config.yml:/etc/docker/registry/config.yml
   gcr:
     container_name: gcr
-    image: registry:2.6.2
+    image: registry:2.8.3
     restart: always
     environment:
       - HTTP_PROXY=${PROXY}
@@ -38,60 +30,49 @@ services:
     volumes:
       - ./data:/var/lib/registry
       - ./gcr/config.yml:/etc/docker/registry/config.yml
-  k8s:
-    container_name: k8s
-    image: registry:2.6.2
+  ghcr:
+    container_name: ghcr
+    image: registry:2.8.3
     restart: always
     environment:
       - HTTP_PROXY=${PROXY}
       - HTTPS_PROXY=${PROXY}
-      - SOCKS_PROXY=${PROXY}
-      - http_proxy=${PROXY}
-      - https_proxy=${PROXY}
-      - socks_proxy=${PROXY}
+    volumes:
+      - ./data:/var/lib/registry
+      - ./ghcr/config.yml:/etc/docker/registry/config.yml
+  k8s:
+    container_name: k8s
+    image: registry:2.8.3
+    restart: always
+    environment:
+      - HTTP_PROXY=${PROXY}
+      - HTTPS_PROXY=${PROXY}
     volumes:
       - ./data:/var/lib/registry
       - ./k8s/config.yml:/etc/docker/registry/config.yml
-  registryk8s:
-    container_name: registryk8s
-    image: registry:2.6.2
-    restart: always
-    environment:
-      - HTTP_PROXY=${PROXY}
-      - HTTPS_PROXY=${PROXY}
-      - SOCKS_PROXY=${PROXY}
-      - http_proxy=${PROXY}
-      - https_proxy=${PROXY}
-      - socks_proxy=${PROXY}
-    volumes:
-      - ./data:/var/lib/registry
-      - ./registryk8s/config.yml:/etc/docker/registry/config.yml
   quay:
     container_name: quay
-    image: registry:2.6.2
+    image: registry:2.8.3
     restart: always
     environment:
       - HTTP_PROXY=${PROXY}
       - HTTPS_PROXY=${PROXY}
-      - SOCKS_PROXY=${PROXY}
-      - http_proxy=${PROXY}
-      - https_proxy=${PROXY}
-      - socks_proxy=${PROXY}
     volumes:
       - ./data:/var/lib/registry
       - ./quay/config.yml:/etc/docker/registry/config.yml
   custom:
     container_name: custom 
-    image: registry:2.6.2
+    image: registry:2.8.3
     restart: always
     volumes:
       - ./data:/var/lib/registry
       - ./custom/config.yml:/etc/docker/registry/config.yml
   nginx:
     container_name: nginx
-    image: nginx:1.19.7
+    image: nginx:alpine
     restart: always
     ports:
-        - "80:80"
+        - "443:443"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+      - ./cert:/etc/nginx/cert
