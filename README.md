@@ -28,10 +28,55 @@ Environment="DOCKER_OPTS=--insecure-registry=gcr.io --insecure-registry=k8s.gcr.
 "insecure-registries" : ["gcr.io", "k8s.gcr.io", "quay.io", "docker.io", "registry-1.docker.io", "nvic.io", "custom.local"]
 ```
 
-## 4.重启客户端docker服务
+重启客户端docker服务
 ```sh
 sudo systemctl daemon-reload
 sudo systemctl restart docker
+```
+
+## 4. containerd配置
+```sh
+containerd config default > /etc/containerd/config.toml
+```
+
+```toml
+[plugins."io.containerd.grpc.v1.cri".registry]
+  [plugins."io.containerd.grpc.v1.cri".registry.mirrors]
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
+      endpoint = ["http://192.168.1.1"]
+      [plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io".tls]
+        insecure_skip_verify = true
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."registry.k8s.io"]
+      endpoint = ["http://192.168.1.1"]
+      [plugins."io.containerd.grpc.v1.cri".registry.mirrors."registry.k8s.io".tls]
+        insecure_skip_verify = true
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."gcr.io"]
+      endpoint = ["http://192.168.1.1"]
+      [plugins."io.containerd.grpc.v1.cri".registry.mirrors."gcr.io".tls]
+        insecure_skip_verify = true
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."k8s.gcr.io"]
+      endpoint = ["http://192.168.1.1"]
+      [plugins."io.containerd.grpc.v1.cri".registry.mirrors."k8s.gcr.io".tls]
+        insecure_skip_verify = true
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."quay.io"]
+      endpoint = ["http://192.168.1.1"]
+      [plugins."io.containerd.grpc.v1.cri".registry.mirrors."quay.io".tls]
+        insecure_skip_verify = true
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."nvcr.io"]
+      endpoint = ["http://192.168.1.1"]
+      [plugins."io.containerd.grpc.v1.cri".registry.mirrors."nvcr.io".tls]
+        insecure_skip_verify = true
+    [plugins."io.containerd.grpc.v1.cri".registry.mirrors."custom.local"]
+      endpoint = ["http://192.168.1.1"]
+      [plugins."io.containerd.grpc.v1.cri".registry.mirrors."custom.local".tls]
+        insecure_skip_verify = true
+```
+
+重启
+```sh
+sudo systemctl daemon-reload
+systemctl restart containerd
+
 ```
 
 ## 5.测试
