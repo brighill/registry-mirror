@@ -2,7 +2,7 @@ version: '3'
 services:
   docker:
     container_name: docker
-    image: registry:2.8.3
+    image: m.daocloud.io/docker.io/library/registry:2.8.3
     restart: always
     environment:
       - HTTP_PROXY=${PROXY}
@@ -12,7 +12,7 @@ services:
       - ./docker/config.yml:/etc/docker/registry/config.yml
   nvcr:
     container_name: nvcr
-    image: registry:2.8.3
+    image: m.daocloud.io/docker.io/library/registry:2.8.3
     restart: always
     environment:
       - HTTP_PROXY=${PROXY}
@@ -22,7 +22,7 @@ services:
       - ./nvcr/config.yml:/etc/docker/registry/config.yml
   gcr:
     container_name: gcr
-    image: registry:2.8.3
+    image: m.daocloud.io/docker.io/library/registry:2.8.3
     restart: always
     environment:
       - HTTP_PROXY=${PROXY}
@@ -32,7 +32,7 @@ services:
       - ./gcr/config.yml:/etc/docker/registry/config.yml
   ghcr:
     container_name: ghcr
-    image: registry:2.8.3
+    image: m.daocloud.io/docker.io/library/registry:2.8.3
     restart: always
     environment:
       - HTTP_PROXY=${PROXY}
@@ -42,7 +42,7 @@ services:
       - ./ghcr/config.yml:/etc/docker/registry/config.yml
   k8s:
     container_name: k8s
-    image: registry:2.8.3
+    image: m.daocloud.io/docker.io/library/registry:2.8.3
     restart: always
     environment:
       - HTTP_PROXY=${PROXY}
@@ -52,7 +52,7 @@ services:
       - ./k8s/config.yml:/etc/docker/registry/config.yml
   quay:
     container_name: quay
-    image: registry:2.8.3
+    image: m.daocloud.io/docker.io/library/registry:2.8.3
     restart: always
     environment:
       - HTTP_PROXY=${PROXY}
@@ -62,14 +62,14 @@ services:
       - ./quay/config.yml:/etc/docker/registry/config.yml
   custom:
     container_name: custom 
-    image: registry:2.8.3
+    image: m.daocloud.io/docker.io/library/registry:2.8.3
     restart: always
     volumes:
       - ./data:/var/lib/registry
       - ./custom/config.yml:/etc/docker/registry/config.yml
   nginx:
     container_name: nginx
-    image: nginx:alpine
+    image: m.daocloud.io/docker.io/library/nginx:alpine
     restart: always
     ports:
         - "443:443"
