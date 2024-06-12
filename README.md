@@ -15,17 +15,17 @@ docker-compose up -d
 将需要加速的域名解析为服务端的IP(如果有内网DNS服务则在DNS服务端修改)
 ```sh
 #/etc/hosts 
-192.168.1.1 gcr.io k8s.gcr.io quay.io docker.io registry-1.docker.io nvcr.io custom.local
+192.168.1.1 gcr.io k8s.gcr.io quay.io docker.io registry-1.docker.io nvcr.io registry.k8s.io custom.local
 ```
 
 ## 3.配置客户端docker
 ```sh
 ### 方法1: 修改/etc/systemd/system/docker.service.d/docker-options.conf
 [Service]
-Environment="DOCKER_OPTS=--insecure-registry=gcr.io --insecure-registry=k8s.gcr.io --insecure-registry=quay.io --insecure-registry=docker.io --insecure-registry=registry-1.docker.io --insecure-registry=nvcr.io --insecure-registry=custom.local --registry-mirror=http://registry-1.docker.io"
+Environment="DOCKER_OPTS=--insecure-registry=gcr.io --insecure-registry=k8s.gcr.io --insecure-registry=quay.io --insecure-registry=docker.io --insecure-registry=registry-1.docker.io --insecure-registry=nvcr.io --insecure-registry=registry.k8s.io --insecure-registry=custom.local --registry-mirror=http://registry-1.docker.io"
 
 ### 方法2: /etc/docker/daemon.json 
-"insecure-registries" : ["gcr.io", "k8s.gcr.io", "quay.io", "docker.io", "registry-1.docker.io", "nvic.io", "custom.local"]
+"insecure-registries" : ["gcr.io", "k8s.gcr.io", "quay.io", "docker.io", "registry.k8s.io", "registry-1.docker.io", "nvic.io", "custom.local"]
 ```
 
 重启客户端docker服务
