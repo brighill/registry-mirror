@@ -22,11 +22,8 @@ docker-compose up -d
 
 信任证书（不同操作系统步骤可能不一样）
 ```sh
-# Gentoo
-sudo emerge app-misc/ca-certificates
-sudo mkdir -p  /usr/local/share/ca-certificates/
-sudo cp cert/ca.crt /usr/local/share/ca-certificates/ca.crt
-sudo update-ca-certificates
+# macOS
+sudo security add-trusted-cert -d -r trustRoot -k /Library/Keychains/System.keychain cert/ca.crt
 ```
 
 ```sh
@@ -43,6 +40,7 @@ sudo update-ca-trust force-enable
 sudo cp cert/ca.crt /etc/pki/ca-trust/source/anchors/
 sudo update-ca-trust
 ```
+
 
 重启docker
 ```sh
