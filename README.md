@@ -2,18 +2,29 @@
 
 > 利用 Registry 的 [镜像代理与缓存](https://docs.docker.com/registry/recipes/mirror/) 功能加速&缓存镜像，同时支持 dockerhub、gcr.io、quay.io、nvcr.io、registry.k8s.io 等多个仓库，保持原有仓库的镜像tag不变，且一次拉取之后打包整个仓库目录可离线使用，
 
-## 启动服务端
+## 1. 安装docker
+
 ```sh
 git clone https://github.com/brighill/registry-mirror.git
 cd registry-mirror
-# 生成证书
-./gencert.sh
-# 如果在无法访问gcr.io的机器上启动服务则需要增加代理
-# export PROXY=ip:port
-docker-compose up -d
+./get-docker.sh --mirror Aliyun
 ```
 
-## 配置客户端
+## 2. 生成证书
+
+```sh
+./gencert.sh
+```
+
+## 3. 启动服务端
+
+```sh
+# 如果在无法访问gcr.io的机器上启动服务则需要增加代理
+# export PROXY=ip:port
+docker compose up -d
+```
+
+## 4. 配置客户端
 修改/etc/hosts将域名解析劫持到自己的IP(如果有自建DNS服务也可以改DNS配置)
 ```sh
 # vim /etc/hosts 
