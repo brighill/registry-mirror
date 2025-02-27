@@ -16,21 +16,8 @@ cd registry-mirror
 ./gencert.sh
 ```
 
-## 3. 启动服务端(本地环境或海外vps二选一)
-
-### 本地环境
-
-*从镜像源或者内部镜像仓库拉取镜像（以m.daocloud.io为例）*
-
-```sh
-docker pull m.daocloud.io/docker.io/library/registry:2.8.3
-docker pull m.daocloud.io/docker.io/library/nginx:alpine
-docker tag m.daocloud.io/docker.io/library/registry:2.8.3 registry:2.8.3 
-docker tag m.daocloud.io/docker.io/library/nginx:alpine nginx:alpine
-```
-
-*设置代理（代理服务器需要允许局域网访问，且ip不能指定为127.0.0.1）*
-
+## 3. 启动服务端
+设置代理（可选）
 ```sh
 # 例1: socks5 代理 ip 192.168.1.1  端口 1080
 export PROXY=socks5://192.168.1.1:1080
@@ -40,12 +27,6 @@ export PROXY=http://192.168.1.1:1080
 ```
 
 *启动服务*
-
-```sh
-docker compose up -d
-```
-
-### 海外 vps
 
 ```sh
 docker compose up -d
@@ -62,7 +43,7 @@ docker compose up -d
 
 ### 信任证书
 
-*以下命令假设已经把第二步生成的 cert/ca.crt 上传到当前目录下的 **cert/ca.crt***
+需要把生成的 **cert/ca.crt** 拷贝到客户端 
 
 ```sh
 # macOS
